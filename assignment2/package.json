@@ -1,0 +1,19 @@
+{
+  "name": "test2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test:unit": "jest tests/*.test.js",
+    "test:e2e": "jest e2e/*.test.js --runInBand",
+    "test": "npm run test:unit && npm run test:e2e"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  },
+  "dependencies": {
+    "uuid": "^3.3.3"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "test1",
+  "version": "1.0.0",
+  "description": "## Run test",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Emanuele De Cupis",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^24.9.0"
+  }
+}
