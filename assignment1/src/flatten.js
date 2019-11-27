@@ -8,8 +8,12 @@ const flattenReducer = (acc, item) => (
         : [...acc, item]
 );
 
-module.exports = (arr, item) => (
-    typeof item !== 'undefined'
-        ? flattenReducer(arr, item)
-        : flatten(arr)
-); 
+module.exports = (...args) => {
+    const [arr = [], item] = args;
+    const isReducer = args.length >= 2;
+    return (
+        isReducer
+            ? flattenReducer(arr, item)
+            : flatten(arr)
+    ); 
+};

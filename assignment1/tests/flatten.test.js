@@ -14,7 +14,7 @@ describe('flatten', () => {
         expect(flatten).toEqual(expect.any(Function));
     });
 
-    [
+    const cases = [
         ['it returns empty array if no argument is passed', undefined, []],
         ['it returns empty array if empty array is passed', [], []],
         ['it returns the same when the array is already flattened', [1, 2, 3], [1, 2, 3]],
@@ -23,14 +23,28 @@ describe('flatten', () => {
         ['it flattens nested empty arrays', [1, [2, [3], []], [], 4], [1, 2, 3, 4]],
         ['it flattens head', [[1], 2, 3, 4], [1, 2, 3, 4]],
         ['it flattens tail', [1, 2, 3, [4]], [1, 2, 3, 4]],
+        ['it considers undefined values', [1, undefined, [2, undefined], 3, undefined], [1, undefined, 2, undefined, 3, undefined]],
         ['it flattens N levels', deepN(100), flatN(100)],
         ['it flattens N levels /2', [deepN(100), deepN(5)], [...flatN(100), ...flatN(5)]],
-    ]
-    .forEach(([title, subject, expected]) => {
-        test(title, () => {
-            expect(flatten(subject)).toEqual(expected);
+    ];
+
+    describe('as a function', () => {
+        cases.forEach(([title, subject, expected]) => {
+            test(title, () => {
+                expect(flatten(subject)).toEqual(expected);
+            });
         });
     });
+
+    describe('as a reducer', () => {
+        cases.forEach(([title, subject = [], expected]) => {
+            test(title, () => {
+                expect(subject.reduce(flatten, [])).toEqual(expected);
+            });
+        });
+    });
+
+
 
     [
         ['it throws if not an array (object)', {}],
@@ -43,13 +57,6 @@ describe('flatten', () => {
             const execution = () => flatten(subject);
             expect(execution).toThrow();
         });
-    });
-
-    test('it works as a reducer', () => {
-        const subject = [1, [2, [3]], 4];
-        const expected = [1, 2, 3, 4];
-        const result = subject.reduce(flatten, []);
-        expect(result).toEqual(expected);
     });
     
 });
